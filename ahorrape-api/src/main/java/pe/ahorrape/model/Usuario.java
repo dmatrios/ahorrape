@@ -2,9 +2,10 @@ package pe.ahorrape.model;
 
 import java.time.LocalDateTime;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,4 +46,13 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDateTime actualizadoEn;
 
+    // Plan del usuario (FREE, PRO, MASTER_DEL_AHORRO)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PlanUsuario plan;
+
+    //  Rol del usuario (USER, ADMIN)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RolUsuario rol;
 }

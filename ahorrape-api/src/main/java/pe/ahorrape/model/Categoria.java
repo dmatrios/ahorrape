@@ -1,5 +1,7 @@
 package pe.ahorrape.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +20,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 
-
 public class Categoria {
 
     @Id
@@ -33,4 +34,9 @@ public class Categoria {
     @Column(nullable = false)
     @Builder.Default
     private Boolean activa = true;
+    @Column(name = "tipo_categoria", nullable = false)
+    private TipoCategoria tipoCategoria; // 👈 nuevo campo
+
+    private LocalDateTime creadoEn;
+    private LocalDateTime actualizadoEn;
 }

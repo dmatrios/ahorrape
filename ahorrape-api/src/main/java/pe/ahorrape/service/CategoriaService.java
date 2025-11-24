@@ -1,10 +1,10 @@
 package pe.ahorrape.service;
 
-import pe.ahorrape.dto.request.CrearCategoriaRequest;
-import pe.ahorrape.dto.request.ActualizarCategoriaRequest;
-import pe.ahorrape.dto.response.CategoriaResponse;
-
 import java.util.List;
+
+import pe.ahorrape.dto.request.ActualizarCategoriaRequest;
+import pe.ahorrape.dto.request.CrearCategoriaRequest;
+import pe.ahorrape.dto.response.CategoriaResponse;
 
 public interface CategoriaService {
 

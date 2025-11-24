@@ -1,4 +1,5 @@
-import { api } from "../../../api/apiClient";
+// src/features/dashboard/api/resumenApi.ts
+import api from "../../../api/apiClient";
 
 export interface TransaccionResumen {
   id: number;
@@ -8,7 +9,7 @@ export interface TransaccionResumen {
   categoriaNombre: string;
   tipo: "INGRESO" | "GASTO";
   monto: number;
-  fecha: string; // viene como "2025-11-20"
+  fecha: string;
   descripcion: string;
 }
 
@@ -26,9 +27,7 @@ export const obtenerResumenMensual = async (
 ): Promise<ResumenMensualResponse> => {
   const res = await api.get<ResumenMensualResponse>(
     `/resumen/usuario/${usuarioId}`,
-    {
-      params: { mes, anio },
-    }
+    { params: { mes, anio } }
   );
   return res.data;
 };

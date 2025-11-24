@@ -1,4 +1,4 @@
-import { api } from "../../../api/apiClient";
+import api  from "../../../api/apiClient";
 
 export interface RegistrarUsuarioRequest {
   nombre: string;

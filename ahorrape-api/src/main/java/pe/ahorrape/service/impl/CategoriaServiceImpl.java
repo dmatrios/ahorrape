@@ -1,16 +1,17 @@
 package pe.ahorrape.service.impl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
-import pe.ahorrape.model.Categoria;
+
+import lombok.RequiredArgsConstructor;
 import pe.ahorrape.dto.request.ActualizarCategoriaRequest;
 import pe.ahorrape.dto.request.CrearCategoriaRequest;
 import pe.ahorrape.dto.response.CategoriaResponse;
 import pe.ahorrape.exception.RecursoNoEncontradoException;
+import pe.ahorrape.model.Categoria;
 import pe.ahorrape.repository.CategoriaRepository;
 import pe.ahorrape.service.CategoriaService;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -21,15 +22,16 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     public CategoriaResponse crearCategoria(CrearCategoriaRequest request) {
 
-        categoriaRepository.findByNombreIgnoreCase(request.getNombre())
+        categoriaRepository.findByNombreIgnoreCase(request.nombre())
                 .ifPresent(c -> {
                     throw new RuntimeException("La categoría ya existe.");
                 });
 
         Categoria categoria = Categoria.builder()
-                .nombre(request.getNombre())
-                .descripcion(request.getDescripcion())
+                .nombre(request.nombre())
+                .descripcion(request.descripcion())
                 .activa(true)
+                .tipoCategoria(request.tipoCategoria()) // 👈 nuevo campo
                 .build();
 
         categoriaRepository.save(categoria);
@@ -58,12 +60,16 @@ public class CategoriaServiceImpl implements CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Categoría no encontrada con id: " + id));
 
-        if (request.getNombre() != null && !request.getNombre().isBlank()) {
-            categoria.setNombre(request.getNombre());
+        if (request.nombre() != null && !request.nombre().isBlank()) {
+            categoria.setNombre(request.nombre());
         }
 
-        if (request.getDescripcion() != null) {
-            categoria.setDescripcion(request.getDescripcion());
+        if (request.descripcion() != null) {
+            categoria.setDescripcion(request.descripcion());
+        }
+
+        if (request.tipoCategoria() != null) { // 👈 permitir actualizar tipo
+            categoria.setTipoCategoria(request.tipoCategoria());
         }
 
         categoriaRepository.save(categoria);
@@ -84,7 +90,9 @@ public class CategoriaServiceImpl implements CategoriaService {
         return new CategoriaResponse(
                 categoria.getId(),
                 categoria.getNombre(),
-                categoria.getDescripcion()
+                categoria.getDescripcion(),
+                categoria.getActiva(),
+                categoria.getTipoCategoria()
         );
     }
 }

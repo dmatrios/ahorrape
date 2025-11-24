@@ -1,11 +1,10 @@
 package pe.ahorrape.dto.request;
 
-import lombok.Data;
+import pe.ahorrape.model.TipoCategoria;
 
-@Data
-public class ActualizarCategoriaRequest {
 
-    private String nombre;
-    private String descripcion;
-    
-}
+public record ActualizarCategoriaRequest(
+        String nombre,
+        String descripcion,
+        TipoCategoria tipoCategoria
+) {}

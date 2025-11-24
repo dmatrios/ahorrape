@@ -5,7 +5,9 @@ import java.util.List;
 
 import pe.ahorrape.dto.request.ActualizarTransaccionRequest;
 import pe.ahorrape.dto.request.CrearTransaccionRequest;
+import pe.ahorrape.dto.response.HistorialTransaccionesResponse;
 import pe.ahorrape.dto.response.TransaccionResponse;
+import pe.ahorrape.model.TipoTransaccion;
 
 public interface TransaccionService {
 
@@ -20,4 +22,14 @@ public interface TransaccionService {
     TransaccionResponse actualizarTransaccion(Long id, ActualizarTransaccionRequest request);
 
     void desactivarTransaccion(Long id);
+
+    HistorialTransaccionesResponse obtenerHistorialUsuario(
+            Long usuarioId,
+            LocalDate fechaInicio,
+            LocalDate fechaFin,
+            TipoTransaccion tipo,
+            Long categoriaId,
+            int page,
+            int size
+    );
 }

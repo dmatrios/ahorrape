@@ -18,7 +18,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import pe.ahorrape.dto.request.ActualizarTransaccionRequest;
 import pe.ahorrape.dto.request.CrearTransaccionRequest;
+import pe.ahorrape.dto.response.HistorialTransaccionesResponse;
 import pe.ahorrape.dto.response.TransaccionResponse;
+import pe.ahorrape.model.TipoTransaccion;
 import pe.ahorrape.service.TransaccionService;
 
 @RestController
@@ -62,5 +64,44 @@ public class TransaccionController {
     @DeleteMapping("/{id}")
     public void desactivar(@PathVariable Long id) {
         transaccionService.desactivarTransaccion(id);
+    }
+    
+        // ------------------------------------------------------------
+    // HISTORIAL AVANZADO (CON FILTROS + PAGINACIÓN)
+    // /api/transacciones/usuario/1/historial?inicio=2025-11-01&fin=2025-11-30
+    //    [&tipo=GASTO][&categoriaId=3][&page=0][&size=20]
+    // ------------------------------------------------------------
+    @GetMapping("/usuario/{usuarioId}/historial")
+    public HistorialTransaccionesResponse obtenerHistorial(
+            @PathVariable Long usuarioId,
+            @RequestParam("inicio")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaInicio,
+            @RequestParam("fin")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaFin,
+            @RequestParam(name = "tipo", required = false) String tipo,
+            @RequestParam(name = "categoriaId", required = false) Long categoriaId,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "20") int size
+    ) {
+
+        // Convertir el String 'tipo' a enum TipoTransaccion (si viene)
+        TipoTransaccion tipoEnum = null;
+        if (tipo != null && !tipo.isBlank()) {
+            try {
+                tipoEnum = TipoTransaccion.valueOf(tipo.toUpperCase()); // INGRESO / GASTO
+            } catch (IllegalArgumentException ex) {
+                throw new RuntimeException("Tipo de transacción inválido. Debe ser INGRESO o GASTO.");
+            }
+        }
+
+        return transaccionService.obtenerHistorialUsuario(
+                usuarioId,
+                fechaInicio,
+                fechaFin,
+                tipoEnum,
+                categoriaId,
+                page,
+                size
+        );
     }
 }

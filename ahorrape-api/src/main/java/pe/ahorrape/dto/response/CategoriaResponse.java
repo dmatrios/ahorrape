@@ -1,12 +1,12 @@
 package pe.ahorrape.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
-public class CategoriaResponse {
-    private Long id;
-    private String nombre;
-    private String descripcion;
-}
+import pe.ahorrape.model.TipoCategoria;
+
+public record CategoriaResponse(
+        Long id,
+        String nombre,
+        String descripcion,
+        Boolean activa,
+        TipoCategoria tipoCategoria
+) {}

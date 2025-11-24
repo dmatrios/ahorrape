@@ -82,7 +82,7 @@ const AuthPage: React.FC = () => {
             </button>
 
             <p className="text-[11px] text-[#008080]/70 mt-1">
-              Versión demo – pronto agregaremos autenticación real.
+              Tu sesión es segura con autenticación por token.
             </p>
           </div>
 

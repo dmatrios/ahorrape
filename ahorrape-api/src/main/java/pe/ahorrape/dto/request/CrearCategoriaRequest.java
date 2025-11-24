@@ -1,10 +1,11 @@
 package pe.ahorrape.dto.request;
 
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import pe.ahorrape.model.TipoCategoria;
 
-@Data
-public class CrearCategoriaRequest {
-
-    private String nombre;
-    private String descripcion;
-}
+public record CrearCategoriaRequest(
+        @NotBlank String nombre,
+        String descripcion,
+        @NotNull TipoCategoria tipoCategoria
+) {}
