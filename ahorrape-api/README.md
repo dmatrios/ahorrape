@@ -173,10 +173,7 @@ mvn spring-boot:run
 - Añadir tests de integración para endpoints protegidos por JWT.
 - Revisión de seguridad: no exponer `secret` en el código fuente.
 
-Si quieres, puedo:
-- Generar una colección Postman o ejemplos cURL para todos los endpoints.
-- Crear un archivo `docs/ENDPOINTS.md` con ejemplos detallados por endpoint.
-- Buscar en el código las implementaciones `service.impl` y documentar comportamientos específicos por método.
+
 
 ---
 Documentación generada automáticamente basada en el código fuente actual. Si quieres que incluya ejemplos concretos de request/response para cada endpoint (payloads reales extraídos del código) o que inspeccione las implementaciones dentro de `service.impl`, dime y lo hago.
